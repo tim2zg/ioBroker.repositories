@@ -1,8 +1,13 @@
-name: Check stable versions
+name: Check repository files
 
 on:
   workflow_dispatch:
-  
+
+  schedule:
+    # * is a special character in YAML, so you have to quote this string
+    # every day
+    - cron:  '45 */6 * * *'
+
   push:
     branches:
       - master  
@@ -15,7 +20,7 @@ concurrency:
 
 jobs:
   check:
-    name: check stable versions
+    name: check repository files
     if: |
       github.repository == 'ioBroker/ioBroker.repositories'
 

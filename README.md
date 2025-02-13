@@ -31,7 +31,7 @@ This is GitHub project for storage of latest and stable repositories.
 3. `title` in `io-package.json` (`common`) is simple short name of adapter in english. `titleLang` is object that consists short names in many languages. `Lang` ist not german `Länge`, but english `LANGuages`.
 4. Adapter needs to have a `README.md` with description, detail information and changelog. English is mandatory. Other languages are welcome. See [Example of README.md](#example-of-readme-md).
 
-   **In `README.md`, there must be a link to the device or the manufacturer's website. Devices must have a photo. Services do not require a photo, but are still welcome.**
+   **In `README.md`, there must be a link to the device or the manufacturer's website. Devices must have a photo. Services do not require a photo but are still welcome.**
 5. Adapter must have a predefined license.
 6. Please remove `www`, `widgets` and `docs` directories (`admin/tab_m.html`, `admin/custom_m.html`) if not used.
 7. Adapter needs to have at least Adapter basic testing (installing, running) using GitHub actions. More information in Forum from `apollon77` (Just take from other adapters the samples)
@@ -79,8 +79,8 @@ This is GitHub project for storage of latest and stable repositories.
 * **Please activate adapter testing with at least package- and integration-tests on GitHub Actions**
 * The adapter testing using GitHub Actions is not for us - it is for you! Please check it after pushing changes to GitHub and before telling it to users or publish an NPM package. If testing is "red" you should check the testing log to see what is broken.
 * If you like to increase testing, you can start implementing adapter specific tests that always run when you push changes to GitHub.
-* You can/should use https://translator.iobroker.in/ to auto translate all relevant texts into all needed languages by providing the english text
-* If an adapter instance wants to generate an object structure, it should use objects from the type device, channel or folder to define sub-structures and provide objects of type state only on the last "level". Different levels can be separated by a ".". An object of the type "state" should never have more objects below it. The allowed fields for the relevant object types are documented in https://github.com/ioBroker/ioBroker.docs/blob/master/docs/en/dev/objectsschema.md#core-concept
+* You can/should use https://translator.iobroker.in/ to auto translate all relevant texts into all necessary languages by providing the english text
+* If an adapter instance wants to generate an object structure, it should use objects from the type device, channel or folder to define substructures and provide objects of type state only on the last "level". Different levels can be separated by a ".". An object of the type "state" should never have more objects below it. The allowed fields for the relevant object types are documented in https://github.com/ioBroker/ioBroker.docs/blob/master/docs/en/dev/objectsschema.md#core-concept
 * If an adapter opens a port or bind socket to some IP-address, the attributes must be called `port` and `bind` (`v6bind` for IPv6).
 * If an adapter connects to some IP-address, the IP attribute may be not called `bind` (use `ip` for that).
 
@@ -100,6 +100,13 @@ Additionally, to all above listed points:
 2. Forum thread with question to test the adapter.
 3. Some feedback on [forum](http://forum.iobroker.net).
 4. **Important** Discovery function! If a device can be found automatically (USB, IP) it should be implemented in discovery adapter after (Discovery PR will be merged after stable acceptance).
+
+## Common Rules and Requirements for Commercial Adapters Requiring a License
+ioBroker GmbH sponsors all infrastructure and services necessary for the smooth functioning of the ioBroker world. This encompasses the repository, central components, and platforms such as the Forum. While the usage of open-source "non-commercial" adapters is entirely free, the scenario changes when adapters necessitate a purchase.
+
+For an optimal experience, it is recommended to procure licenses through the official ioBroker Website. The ioBroker GmbH facilitates license management and provides secure components for seamless integration into the adapter. In return for this service, a standard share of 30% of revenues is remitted to ioBroker GmbH. For further information or inquiries, please reach out to info@iobroker.net.
+
+In cases where purchases are managed by the developer directly, and the adapter is intended for inclusion in the repository, a service fee of typically 15% of the revenue is applicable. For details and negotiations regarding this arrangement, please also contact info@iobroker.net.
 
 ## How-to
 ### How to publish on npm
@@ -162,7 +169,9 @@ Of course, you can add your own licenses, even WTFPL.
 You must, of course, take in count the licenses of components that are used in your adapter. E.g., if you use the main packet under GPLv2 license, you cannot make CC-BY-NC from that.
 
 ### Testing
-The Adapter Creator will create all needed files and deps for the testing, see also https://github.com/ioBroker/ioBroker.example/tree/master/JavaScript/test .  Tests are then run by GitHub Action (also pre-generated)
+The Adapter Creator will create all necessary files and deps for the testing,
+see also https://github.com/ioBroker/ioBroker.example/tree/master/JavaScript/test .
+Tests are then run by GitHub Action (also pre-generated)
     
 ### Types
 The `io-package.json` must have an attribute type in common part.
@@ -226,7 +235,7 @@ Please define the following attributes in `package.json` :
 ### Samples
 For **latest** (sources-dist.json):
 
-```
+```json
   "admin": {
     "meta": "https://raw.githubusercontent.com/ioBroker/ioBroker.admin/master/io-package.json",
     "icon": "https://raw.githubusercontent.com/ioBroker/ioBroker.admin/master/admin/admin.png",
@@ -236,7 +245,7 @@ For **latest** (sources-dist.json):
 
 For **stable** (sources-dist-stable.json):
 
-```
+```json
   "admin": {
     "meta": "https://raw.githubusercontent.com/ioBroker/ioBroker.admin/master/io-package.json",
     "icon": "https://raw.githubusercontent.com/ioBroker/ioBroker.admin/master/admin/admin.png",
@@ -256,3 +265,8 @@ On every pull request to the repository, the GitHub Action will be triggered (se
 ## Issues to move the latest version of adapter to stable
 Every night the GitHub Action will be triggered at 3:15 (see [stable.yml](.github/workflows/stable.yml) ). It will check the following things:
 - If the latest version is good enough for stable and will create an issue if yes (See [lib/readyForStable.js](lib/readyForStable.js))
+
+## How is the repository build? 
+The repository is build executing `npm run build`. However, this is currently only done on a dedicated server running on AWS.
+However, before build, the repository is pulled and thus uses the code from the repository. Hence, modifications to how the repo is 
+built should be made against this repository. 
